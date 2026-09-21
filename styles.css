@@ -1,0 +1,733 @@
+/* ---------- Theme tokens ---------- */
+:root {
+  --bg: #ffffff;
+  --bg-alt: #fafafa;
+  --surface: #ffffff;
+  --text: #111111;
+  --text-soft: #4a4a4a;
+  --text-mute: #8a8a8a;
+  --border: #ececec;
+  --border-strong: #d8d8d8;
+  --accent: #111111;
+  /* Single knob for the brand color used by the logo, title, bullets and "ours" highlight. */
+  --brand: #f27100;
+  /* Opaque on purpose: this sits on the black video cell, where a translucent
+     tint would read as dark brown rather than as a light wash. */
+  --brand-soft: #fdf1e5;
+  --link: #2a5db0;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --maxw: 1225px;
+  --maxw-narrow: 862px;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.container.narrow { max-width: var(--maxw-narrow); }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled { border-bottom-color: var(--border); }
+
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-logo {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--brand);
+  font-size: 15px;
+}
+.nav-logo:hover { text-decoration: none; }
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.nav-links a {
+  color: var(--text-soft);
+  font-weight: 400;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 40px 0 0;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 auto 28px;
+  max-width: 1160px;
+  color: var(--text);
+}
+.title-row { display: block; }
+.title-accent { display: block; }
+.title-brand { color: var(--brand); }
+
+.authors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px 18px;
+  margin: 0 0 6px;
+  font-size: 17.5px;
+  color: var(--text);
+}
+.author { white-space: nowrap; }
+.author sup {
+  color: var(--text-mute);
+  font-weight: 400;
+  font-size: 0.7em;
+  line-height: 0;
+  position: relative;
+  top: -0.45em;
+  vertical-align: baseline;
+}
+
+.affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  font-size: 15.5px;
+  color: var(--text-mute);
+  margin-bottom: 6px;
+}
+
+.equal-contrib {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-bottom: 16px;
+}
+.equal-contrib sup { margin-right: 2px; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--accent);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.link-btn:hover {
+  text-decoration: none;
+  background: #2a2a2a;
+  border-color: #2a2a2a;
+}
+.link-btn svg { width: 14px; height: 14px; }
+
+/* ---------- Teaser ---------- */
+.teaser-wrap {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+}
+.teaser-video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+}
+.teaser-caption {
+  max-width: 900px;
+  margin: 12px auto 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-mute);
+}
+
+/* ---------- Sections ---------- */
+.section { padding: 48px 0; }
+.section-tight { padding: 24px 0 40px; }
+.section-alt { background: var(--bg-alt); }
+
+.section-head { text-align: center; margin-bottom: 26px; }
+.section-title {
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: var(--text);
+  text-align: center;
+}
+.section-sub {
+  margin: 0;
+  color: var(--text-mute);
+  font-size: 15px;
+}
+.scroll-hint {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 13px;
+  color: var(--text-mute);
+  opacity: 0.75;
+}
+/* `display: inline-block` above would otherwise beat the UA [hidden] rule. */
+.scroll-hint[hidden] { display: none; }
+
+/* ---------- Method text ---------- */
+.lead {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-soft);
+  margin: 0;
+}
+.lead em { color: var(--text-mute); font-style: normal; }
+.lead strong { color: var(--text); font-weight: 600; }
+
+/* The method name, wherever it appears in prose. */
+.lead .brand-name,
+.method-points .brand-name { color: var(--brand); font-weight: 600; }
+
+.method-points {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 13px;
+}
+.method-points li {
+  position: relative;
+  padding-left: 21px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+.method-points li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+.method-points strong { color: var(--text); font-weight: 600; }
+
+.method-figure {
+  margin: 28px 0 0;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+.method-figure img { width: 100%; height: auto; display: block; }
+
+/* ---------- RTC mode toggle ---------- */
+/* ---------- Real-time banner ---------- */
+.realtime-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto 18px;
+  padding: 11px 18px;
+  border: 1px solid var(--brand);
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+}
+.realtime-banner svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: var(--brand);
+}
+.realtime-banner strong { color: var(--brand); font-weight: 600; }
+
+@media (max-width: 620px) {
+  .realtime-banner { border-radius: var(--radius-md); align-items: flex-start; }
+}
+
+/* ---------- Playback-speed chip ---------- */
+.speed-chip {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+/* ---------- Rollout rows (one row per task) ---------- */
+.task-block { margin-bottom: 40px; }
+.task-block:last-child { margin-bottom: 0; }
+
+.task-block-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.task-block-name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+.task-block-desc {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-mute);
+}
+
+/* Scrollable flex row: the row also carries .scroll-row, which supplies the
+   overflow, wheel/drag and scrollbar styling. The plain baselines fill the
+   first screenful; the w/-RTC variants sit past the right edge. */
+.video-row { gap: 12px; }
+.video-row > .video-cell { flex: 0 0 min(235px, 70vw); }
+/* Ours lives outside the scroller, so it stays put while only the baselines
+   scroll beside it — nothing slides underneath, the row just clips at its own
+   left edge. */
+.video-row-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.video-row-wrap > .video-cell.is-ours { flex: 0 0 min(235px, 70vw); }
+.video-row-wrap > .video-row { flex: 1; min-width: 0; }
+
+.video-cell {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+}
+.video-cell video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+  /* Rollout clips are display-only: no hover, pause or seek. */
+  pointer-events: none;
+}
+.video-cell .video-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 8px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+  text-align: center;
+}
+.video-cell .video-label .label-sub {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-mute);
+}
+
+/* Our method: brand-colored label. */
+.video-cell.is-ours .video-label {
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-top-color: var(--brand);
+}
+.video-cell.is-ours .video-label .label-sub { color: var(--brand); opacity: 0.8; }
+
+/* ---------- Horizontal scroll row (rollouts + training) ---------- */
+.scroll-row-wrap { position: relative; }
+.scroll-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  /* No scroll-snap: Chrome re-snaps to a card edge after every scroll (even
+     with proximity), which yanks the row back to the start and makes it feel
+     unscrollable. */
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+/* While the mouse is dragging the row, scroll must track the pointer 1:1. */
+.scroll-row.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  user-select: none;
+}
+.scroll-row::-webkit-scrollbar { height: 6px; }
+.scroll-row::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+/* Fixed card width so the row keeps its horizontal scroll instead of the cards
+   stretching to fill it. */
+.scroll-row > * {
+  flex: 0 0 min(340px, 84vw);
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.scroll-btn svg { width: 18px; height: 18px; }
+.scroll-btn[hidden] { display: none; }
+.scroll-btn:hover { background: #fff; }
+.scroll-btn[disabled] { opacity: 0.25; cursor: default; }
+.scroll-btn-left { left: -14px; }
+.scroll-btn-right { right: -14px; }
+@media (max-width: 1300px) {
+  .scroll-btn-left { left: 4px; }
+  .scroll-btn-right { right: 4px; }
+}
+
+.card {
+  position: relative;
+  margin: 0;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.card video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+  /* The training recordings come from a different camera pipeline than the
+   * phone footage in the rollout/evaluation sections and read a bit darker and
+   * flatter. A light touch in the browser instead of re-encoding; kept subtle
+   * on purpose -- a stronger grade looked artificial. */
+  filter: brightness(1.12) contrast(1.04) saturate(1.1);
+}
+/* Ball balancing is lit a touch brighter than the rest: same grade, 10% dimmer. */
+.card[data-task="balance"] video {
+  filter: brightness(1.008) contrast(1.04) saturate(1.1);
+}
+/* Dynamic pick keeps its native colors (no grade), only the crop below. */
+.card[data-task="dynamic_pick"] video {
+  filter: none;
+  /* Trim the left 3% of the frame: scale by 1/0.97 anchored on the right edge,
+   * so the cut-off strip falls outside the card (overflow hidden) and the rest
+   * fills the same box. */
+  transform: scale(1.031);
+  transform-origin: 100% 50%;
+}
+.card figcaption {
+  padding: 8px 10px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+/* ---------- Evaluation ---------- */
+.task-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.task-tab {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-mute);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+.task-tab:hover { color: var(--text); }
+.task-tab.active {
+  color: var(--text);
+  border-bottom-color: var(--text);
+}
+
+.eval-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 24px;
+  /* Both columns share one height: the 16:9 video sets it and the results
+     card stretches to match (its note is pinned to the bottom edge). */
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .eval-layout { grid-template-columns: 1fr; }
+}
+
+.task-stage {
+  position: relative;
+  background: #000;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.task-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+}
+.task-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 18px 20px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+.task-info h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.task-info p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+}
+
+.eval-results {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.eval-results-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 12px;
+}
+.eval-legend {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.eval-legend > span { display: inline-flex; align-items: center; gap: 5px; }
+.eval-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--text-mute);
+}
+.eval-swatch.is-nortc { background: #d4d4d4; }
+#eval-bars { flex: 1; }
+.eval-bar-row { margin-bottom: 11px; }
+.eval-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 5px;
+  font-size: 13.5px;
+}
+.eval-bar-name { color: var(--text-soft); font-weight: 500; }
+.eval-bar-row.is-ours .eval-bar-name { color: var(--brand); font-weight: 600; }
+.eval-bar-vals { display: inline-flex; gap: 10px; }
+.eval-bar-val {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  color: var(--text-mute);
+}
+.eval-bar-val.is-nortc { color: #b4b4b4; }
+.eval-bar-row.is-ours .eval-bar-val { color: var(--brand); }
+.eval-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: #eeeeee;
+  overflow: hidden;
+}
+.eval-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--text-mute);
+  width: 0;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.eval-bar-row.is-ours .eval-bar-fill { background: var(--brand); }
+/* Second, lighter bar: the same baseline run w/o RTC. */
+.eval-bar-track.is-nortc { margin-top: 3px; height: 6px; }
+.eval-bar-track.is-nortc .eval-bar-fill { background: #d4d4d4; }
+
+.eval-note {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: var(--text-mute);
+}
+
+/* ---------- Missing-video placeholder ---------- */
+.video-missing {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  text-align: center;
+  background: #f4f4f4;
+  border: 1px dashed var(--border-strong);
+  border-radius: inherit;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-mute);
+  z-index: 2;
+}
+
+/* ---------- BibTeX ---------- */
+.code-wrap { position: relative; }
+.code {
+  margin: 0;
+  padding: 20px 22px;
+  background: #fafafa;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .nav-inner { padding: 12px 20px; gap: 16px; }
+  .nav-links { gap: 14px; }
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time EXPO-FT: Reinforcement Learning for Real-Time Vision-Language-Action Policies</title>
+  <meta name="description" content="Real-time reinforcement learning on dynamic real-world manipulation tasks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=28" />
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="nav-logo">Real-Time EXPO-FT</a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#rollouts">Policy Rollouts</a>
+        <a href="#evaluation">Evaluation</a>
+        <a href="#training">Training</a>
+        <a href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="top">
+    <div class="container">
+      <h1 class="title">
+        <span class="title-accent">
+          <span class="title-row"><span class="title-brand">Real-Time EXPO-FT</span>: Reinforcement Learning</span>
+          <span class="title-row">for Real-Time Vision-Language-Action Policies</span>
+        </span>
+      </h1>
+
+      <!-- TODO: authors + affiliations -->
+      <div class="authors">
+        <span class="author">Perry Dong<sup>*</sup></span>
+        <span class="author">Kuo-Han Hung<sup>*</sup></span>
+        <span class="author">Dorsa Sadigh</span>
+        <span class="author">Chelsea Finn</span>
+      </div>
+      <div class="affiliations">
+        <span>Stanford University</span>
+      </div>
+      <br>
+
+      <div class="links">
+        <!-- TODO: real links -->
+        <a class="link-btn" href="https://arxiv.org/pdf/2609.18207" aria-label="Paper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Paper
+        </a>
+        <a class="link-btn" href="https://arxiv.org/abs/2609.18207" aria-label="arXiv">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+          arXiv
+        </a>
+        <a class="link-btn" href="https://github.com/pd-perry/expo-ft" aria-label="Code">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Code
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== OVERVIEW VIDEO ===================== -->
+  <section id="overview" class="section section-tight">
+    <div class="container">
+      <div class="teaser-wrap">
+        <video class="teaser-video" autoplay muted loop playsinline controls preload="metadata"
+               data-placeholder="Project overview video — static/videos/teaser.mp4">
+          <source src="static/videos/teaser.mp4?v=3" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABSTRACT / METHOD ===================== -->
+  <section id="method" class="section">
+    <div class="container narrow">
+      <div class="section-head">
+        <h2 class="section-title">Our Method</h2>
+        <p class="section-sub">Reinforcement learning for real-time control.</p>
+      </div>
+
+      <p class="lead">
+        Real robots do not pause for inference. The scale that makes a pretrained
+        vision-language-action (VLA) model a strong behavior prior also inflates its inference
+        latency &mdash; and the physical world keeps moving while the robot computes. The observation an
+        action was inferred from is rarely the observation at the moment it executes, a distribution
+        shift that affects reliability exactly where it matters most. Methods like real-time chunking
+        keep control smooth under this latency, but give the policy no mechanism to move beyond its
+        training distribution. We propose <strong class="brand-name">Real-Time EXPO-FT</strong> to close that gap: a reinforcement
+        learning framework for fine-tuning real-time VLA policies, so the
+        reliability gains of RL and the reactivity of real-time execution come together.
+      </p>
+
+      <ul class="method-points">
+        <li><strong>Slow action candidate generation.</strong> Building on EXPO-FT, we decouple action generation into two stages.
+          First, a large VLA base policy proposes action chunks, which is slow because of the scale of the policy.</li>
+        <li><strong>Fast and reactive action edits.</strong> By the time the base actions are generated, the environment has already transitioned to a new state. 
+          The edit policy transforms the actions using the
+          observation available at the time of execution &mdash; so the policy stays maximally
+          reactive.</li>
+        <li><strong>Q-value chunk selection.</strong> The Q-function is used to select the best action candidate on-the-fly, after
+          the VLA proposes candidate chunks and the edit policy edits the actions.</li>
+      </ul>
+
+      <!-- TODO: drop the method figure in at static/images/method.png and unhide this -->
+      <figure class="method-figure" hidden>
+        <img src="static/images/method.png" alt="Real-Time EXPO-FT overview" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== POLICY ROLLOUTS ===================== -->
+  <section id="rollouts" class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Policy Rollouts</h2>
+        <p class="section-sub">
+          Each row is one task. Our policy is on the left; the baselines follow, with the
+          w/&nbsp;RTC variants at the end of the row.
+          <span class="scroll-hint">&larr; scroll &rarr;</span>
+        </p>
+      </div>
+
+      <div class="realtime-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+        <span><strong>Every clip below plays at 1&times; speed.</strong> Nothing is sped up or slowed
+        down.</span>
+      </div>
+
+      <!-- Rows are generated by script.js from the TASKS / METHODS tables. -->
+      <div id="rollout-rows"></div>
+    </div>
+  </section>
+
+  <!-- ===================== EVALUATION ===================== -->
+  <section id="evaluation" class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Evaluation</h2>
+        <p class="section-sub">Quantitative results across all tasks.</p>
+      </div>
+
+      <!-- Tabs generated by script.js from TASKS. -->
+      <div class="task-tabs" id="eval-tabs" role="tablist" aria-label="Evaluation tasks"></div>
+
+      <div class="eval-layout">
+        <div class="task-stage">
+          <video id="eval-video" class="task-video" autoplay muted loop playsinline controls preload="metadata"></video>
+          <div class="task-info">
+            <h3 id="eval-title"></h3>
+            <p id="eval-desc"></p>
+          </div>
+        </div>
+        <div class="eval-results">
+          <div class="eval-results-head">
+            <span>Successful trials</span>
+            <span class="eval-legend" aria-label="Bar legend">
+              <span><i class="eval-swatch"></i>w/ RTC</span>
+              <span><i class="eval-swatch is-nortc"></i>w/o RTC</span>
+            </span>
+          </div>
+          <div id="eval-bars"></div>
+          <p class="eval-note" id="eval-note"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRAINING ===================== -->
+  <section id="training" class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Training</h2>
+        <p class="section-sub">
+          Our policy improving over the course of real-world online RL, played back at 5&times;.
+          <span class="scroll-hint">&larr; scroll &rarr;</span>
+        </p>
+      </div>
+
+      <div class="scroll-row-wrap">
+        <button class="scroll-btn scroll-btn-left" aria-label="Scroll left" data-target="training-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="scroll-btn scroll-btn-right" aria-label="Scroll right" data-target="training-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <!-- Cards generated by script.js from TASKS. -->
+        <div class="scroll-row" id="training-row"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BIBTEX ===================== -->
+  <section id="bibtex" class="section">
+    <div class="container narrow">
+      <h2 class="section-title">BibTeX</h2>
+      <div class="code-wrap">
+        <button class="copy-btn" id="copy-bibtex" aria-label="Copy BibTeX">Copy</button>
+        <!-- TODO: real citation -->
+        <pre class="code"><code id="bibtex-code">@misc{dong2026reinforcement,
+      title={Reinforcement Learning for Real-Time Vision-Language-Action Policies}, 
+      author={Perry Dong and Kuo-Han Hung and Dorsa Sadigh and Chelsea Finn},
+      year={2026},
+      eprint={2609.18207},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2609.18207}, 
+},
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Real-Time EXPO-FT website.</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=20"></script>
+</body>
+</html>
